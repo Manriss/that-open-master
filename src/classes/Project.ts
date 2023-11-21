@@ -32,12 +32,14 @@ export class Project implements IProject {
     this.status = data.status;
     this.userRole = data.userRole;
     this.finishDate = data.finishDate;
+    this.cost=data.cost;
+    this.progress=data.progress;
     this.id = uuidv4()
     this.setUI()
   }
   ui: HTMLElement;
-  cost: number = 0;
-  progress: number = 0
+  cost: number
+  progress: number 
   color=randomColor()
   private setUI() {
     const iniciales=this.name.slice(0,2)
