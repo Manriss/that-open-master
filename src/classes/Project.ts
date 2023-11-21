@@ -1,4 +1,5 @@
 import { v4 as uuidv4 } from 'uuid'
+import { randomColor } from '../utils';
 
 export type status = "pending" | "active" | "finished"
 export type userRole = "Architect" | "engineer" | "developer"
@@ -36,13 +37,14 @@ export class Project implements IProject {
   ui: HTMLElement;
   cost: number = 20000;
   progress: number = 25
-
+  color=randomColor()
   private setUI() {
+    const iniciales=this.name.slice(0,2)
     this.ui = document.createElement("div");
     this.ui.className = "project-card"
     this.ui.innerHTML = `
           <div class="card-header">
-            <p style="background-color: #ca8134; padding: 10px; border-radius: 8px; aspect-ratio: 1;">HC</p>
+            <p style="background-color: ${this.color}; padding: 10px; border-radius: 8px; aspect-ratio: 1;text-transform: uppercase;">${iniciales}</p>
             <div>
               <h5>${this.name}</h5>
               <p>${this.description}</p>

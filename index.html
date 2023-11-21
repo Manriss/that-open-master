@@ -26,7 +26,7 @@
           <div class="input-list">
             <div class="form-field-container">
               <label><span class="material-icons-round">apartment</span>Name</label>
-              <input name="name" type="text" placeholder="What's the name of your project?">
+              <input required minlength="5" name="name" type="text" placeholder="What's the name of your project?">
               <p style="color: gray; font-size: var(--font-sm); margin-top: 5px; font-style: italic;">TIP: Give it a
                 short name</p>
             </div>
@@ -56,7 +56,7 @@
                 <span class="material-icons-round">calendar_month</span>
                 Finish Date
               </label>
-              <input name="finishDate" type="date"></input>
+              <input id="datePicker" name="finishDate" type="date" value="2023-11-23"></input>
             </div>
             <div style="display: flex; margin: 10px 0px 10px auto; column-gap: 10px;">
               <button type="button" value="cancel"  style="background-color: transparent;">Cancel</button>
@@ -74,36 +74,55 @@
       </div>
       </header>
       <div id="projects-list">
-<!--         <div class="project-card">
-          <div class="card-header">
-            <p style="background-color: #ca8134; padding: 10px; border-radius: 8px; aspect-ratio: 1;">HC</p>
-            <div>
-              <h5>Project Name</h5>
-              <p>Project Description Goes Here...</p>
-            </div>
-          </div>
-          <div class="card-content">
-            <div class="card-property">
-              <p style="color: #969696;">Status</p>
-              <p>Active</p>
-            </div>
-            <div class="card-property">
-              <p style="color: #969696;">Role</p>
-              <p>Engineer</p>
-            </div>
-            <div class="card-property">
-              <p style="color: #969696;">Cost</p>
-              <p>$2'000.000</p>
-            </div>
-            <div class="card-property">
-              <p style="color: #969696;">Estimated Progress</p>
-              <p>45%</p>
-            </div>
-          </div>
-        </div> -->
       </div>
     </div>
+<!--     PROJECT DETAILS -->
     <div class="page" id="project-details" style="display: none">
+      <dialog id="edit-project-modal">
+        <form id="edit-project-form">
+          <h2>Edit Project details</h2>
+          <div class="input-list">
+            <div class="form-field-container">
+              <label><span class="material-icons-round">apartment</span>Name</label>
+              <input required minlength="5" name="name" type="text" placeholder="What's the name of your project?">
+              <p style="color: gray; font-size: var(--font-sm); margin-top: 5px; font-style: italic;">TIP: Give it a
+                short name</p>
+            </div>
+            <div class="form-field-container">
+              <label><span class="material-icons-round">subject</span>Description</label>
+              <textarea name="description" cols="30" rows="5"
+                placeholder="Give your project a nice description! So people is jealous about it."></textarea>
+            </div>
+            <div class="form-field-container">
+              <label><span class="material-icons-round">person</span>Role</label>
+              <select name="userRole">
+                <option>Architect</option>
+                <option>Engineer</option>
+                <option>Developer</option>
+              </select>
+            </div>
+            <div class="form-field-container">
+              <label><span class="material-icons-round">not_listed_location</span>Status</label>
+              <select name="status">
+                <option>Pending</option>
+                <option>Active</option>
+                <option>Finished</option>
+              </select>
+            </div>
+            <div class="form-field-container">
+              <label for="finishDate">
+                <span class="material-icons-round">calendar_month</span>
+                Finish Date
+              </label>
+              <input id="datePicker" name="finishDate" type="date" value="2023-11-23"></input>
+            </div>
+            <div style="display: flex; margin: 10px 0px 10px auto; column-gap: 10px;">
+              <button type="button" value="cancel"  style="background-color: transparent;">Cancel</button>
+              <button type="submit" style="background-color: rgb(18, 145, 18);">Accept</button>
+            </div>
+          </div>
+        </form>
+      </dialog>
       <header>
         <div>
           <h2 data-project-info="name">Hospital Center</h2>
@@ -115,10 +134,10 @@
           <div class="dashboard-card" style="padding: 30px 0;">
             <div
               style="display: flex; justify-content: space-between; align-items: center; padding: 0px 30px; margin-bottom: 30px;">
-              <p
-                style="font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 12px;">
-                HC</p>
-              <button class="btn-secondary">
+              <p data-project-info="iniciales"
+                style="font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 12px;text-transform: uppercase;">
+                hc</p>
+              <button id="edit-project-btn" class="btn-secondary">
                 <p style="width: 100%;">Edit</p>
               </button>
             </div>
@@ -178,6 +197,7 @@
         <div id="viewer-container" class="dashboard-card"></div>
       </div>
     </div>
+<!--     USERS PAGE -->
     <div class="page" id="users-page" style="display: none;">
       <dialog id="new-user-modal">
         <form id="new-user-form" >

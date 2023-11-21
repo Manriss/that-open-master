@@ -1,14 +1,7 @@
 import { IProject, status, userRole } from "./classes/Project";
 import { ProjectsManager } from "./classes/ProjectsManager";
-import { errorPopUp } from "./utils";
-function toogleModal(id: string, visible: boolean) {
-  const modal = document.getElementById(id);
-  if (modal && modal instanceof HTMLDialogElement) {
-    visible ? modal.showModal() : modal.close();
-  } else {
-    console.warn("The provided modal wasn't found. ID: ", id);
-  }
-}
+import { errorPopUp,getToday,toogleModal } from "./utils";
+
 
 const projectListUI = document.getElementById("projects-list") as HTMLElement;
 const projectsManager = new ProjectsManager(projectListUI);
@@ -17,6 +10,9 @@ const newProjectBtn = document.getElementById("new-project-btn");
 if (newProjectBtn) {
   newProjectBtn.addEventListener("click", () => {
     toogleModal("new-project-modal", true);
+    const dtPicker=document.getElementById("datePicker") as HTMLInputElement
+    dtPicker.value=getToday()
+
   });
 } else {
   console.warn("New projects button was not found");

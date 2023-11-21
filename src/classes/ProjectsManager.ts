@@ -1,5 +1,6 @@
 import { IProject, Project } from "./Project";
-import { errorPopUp } from "../utils";
+import { errorPopUp, toogleModal} from "../utils";
+
 export class ProjectsManager {
   list: Project[] = [];
   ui: HTMLElement;
@@ -8,6 +9,7 @@ export class ProjectsManager {
   }
 
   newProject(data: IProject) {
+   
     const listProjectNames=this.list.map((project)=>{return project.name})
     if (listProjectNames.includes(data.name)){
         throw new Error(`a project with that name (${data.name}) already exists!`)
@@ -27,7 +29,6 @@ export class ProjectsManager {
     return project;
   }
 private setDetailsPage(project){
-  console.log(project)
   const detailsPage=document.getElementById("project-details")
   if(!detailsPage)return
   const nameList=detailsPage.querySelectorAll("[data-project-info='name']")
@@ -37,6 +38,7 @@ private setDetailsPage(project){
   const userRole=detailsPage.querySelector("[data-project-info='userRole']")
   const finishDate=detailsPage.querySelector("[data-project-info='finishDate']")
   const progress=detailsPage.querySelector("[data-project-info='progress']") as HTMLElement
+  const iniciales=detailsPage.querySelector("[data-project-info='iniciales']") as HTMLElement
   if(nameList){
     nameList.forEach((name)=>{name.textContent=project.name})
     }
@@ -59,9 +61,18 @@ private setDetailsPage(project){
   }
   if(progress){
     progress.style.width=project.progress+"%"
-    progress.textContent=project.progress + "%"
-    
+    progress.textContent=project.progress + "%" 
   }
+  if(iniciales){
+    iniciales.style.backgroundColor=project.color
+    const inicial=project.name.slice(0,2)
+    iniciales.textContent=inicial
+  }
+  const editBtn=document.getElementById("edit-project-btn") as HTMLButtonElement
+  editBtn.addEventListener("click",()=>{
+
+toogleModal("edit-project-modal",true)
+  })
 }
 
   getProject(id: string) {
@@ -131,4 +142,8 @@ private setDetailsPage(project){
     })
 input.click()
   }
+updateProject(){
+
+}
+
 }
