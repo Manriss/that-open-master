@@ -1,4 +1,4 @@
-import { IProject, Project } from "./Project";
+import { IProject, Project,status,userRole } from "./Project";
 import { errorPopUp, toogleModal} from "../utils";
 
 export class ProjectsManager {
@@ -70,8 +70,8 @@ private setDetailsPage(project){
   }
   const editBtn=document.getElementById("edit-project-btn") as HTMLButtonElement
   editBtn.addEventListener("click",()=>{
+  this.updateProject(project)
 
-toogleModal("edit-project-modal",true)
   })
 }
 
@@ -142,8 +142,62 @@ toogleModal("edit-project-modal",true)
     })
 input.click()
   }
-updateProject(){
+ 
+updateProject(project){
+  console.log(project)
+  toogleModal("edit-project-modal",true)
 
+  const editForm = document.getElementById("edit-project-form");
+  if(!editForm)return
+  const name=document.querySelector("[data-edit-info='name']") as HTMLInputElement
+  const description=document.querySelector("[data-edit-info='description']") as HTMLInputElement
+  const status=document.querySelector("[data-edit-info='status']") as HTMLInputElement
+  const userRole=document.querySelector("[data-edit-info='userRole']") as HTMLInputElement
+  const finishDate=document.querySelector("[data-edit-info='finishDate']") as HTMLInputElement
+ //100% sguro que existen
+  name.value=project.name
+  description.value=project.description
+  status.value=project.status
+  userRole.value=project.userRole
+  //la fecha de project hay que ponerla en formato yyyy-mm-dd
+  finishDate.value=project.finishDate
+
+
+
+  editForm.addEventListener("click", (e) => {
+    const boton = e.target as HTMLButtonElement;
+    if (boton.value == "cancel") {
+      if (editForm instanceof HTMLFormElement) {
+        editForm.reset();
+        toogleModal("edit-project-modal", false);
+      }
+    }
+  });
+
+  editForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    if ( editForm instanceof HTMLFormElement) {
+      const formData = new FormData( editForm);
+      const projectData: IProject = {
+        name: formData.get("name") as string,
+        description: formData.get("description") as string,
+        status: formData.get("status") as status,
+        userRole: formData.get("userRole") as userRole,
+        finishDate: new Date(formData.get("finishDate") as string),
+        id: project.id,
+        cost: project.cost,
+        progress:project.progress
+      };
+      try {
+        //const project = projectsManager.newProject(projectData);
+        console.log(projectData)
+        editForm.reset();
+        toogleModal("edit-project-modal", false);
+      } catch (err) {
+        errorPopUp(err)
+      }
+    }
+  });
 }
 
 }

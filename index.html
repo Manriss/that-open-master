@@ -84,18 +84,18 @@
           <div class="input-list">
             <div class="form-field-container">
               <label><span class="material-icons-round">apartment</span>Name</label>
-              <input required minlength="5" name="name" type="text" placeholder="What's the name of your project?">
+              <input data-edit-info="name" required minlength="5" name="name" type="text" placeholder="What's the name of your project?">
               <p style="color: gray; font-size: var(--font-sm); margin-top: 5px; font-style: italic;">TIP: Give it a
                 short name</p>
             </div>
             <div class="form-field-container">
               <label><span class="material-icons-round">subject</span>Description</label>
-              <textarea name="description" cols="30" rows="5"
+              <textarea data-edit-info="description" name="description" cols="30" rows="5"
                 placeholder="Give your project a nice description! So people is jealous about it."></textarea>
             </div>
             <div class="form-field-container">
               <label><span class="material-icons-round">person</span>Role</label>
-              <select name="userRole">
+              <select data-edit-info="userRole" name="userRole">
                 <option>Architect</option>
                 <option>Engineer</option>
                 <option>Developer</option>
@@ -103,7 +103,7 @@
             </div>
             <div class="form-field-container">
               <label><span class="material-icons-round">not_listed_location</span>Status</label>
-              <select name="status">
+              <select data-edit-info="status" name="status">
                 <option>Pending</option>
                 <option>Active</option>
                 <option>Finished</option>
@@ -114,7 +114,7 @@
                 <span class="material-icons-round">calendar_month</span>
                 Finish Date
               </label>
-              <input id="datePicker" name="finishDate" type="date" value="2023-11-23"></input>
+              <input data-edit-info="finishDate" id="datePicker" name="finishDate" type="date" value="2023-11-23"></input>
             </div>
             <div style="display: flex; margin: 10px 0px 10px auto; column-gap: 10px;">
               <button type="button" value="cancel"  style="background-color: transparent;">Cancel</button>

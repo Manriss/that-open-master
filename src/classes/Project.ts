@@ -12,6 +12,7 @@ export interface IProject {
   finishDate: Date;
   id: string;
   cost: number;
+  progress:number
 }
 export class Project implements IProject {
   name: string;
@@ -35,8 +36,8 @@ export class Project implements IProject {
     this.setUI()
   }
   ui: HTMLElement;
-  cost: number = 20000;
-  progress: number = 25
+  cost: number = 0;
+  progress: number = 0
   color=randomColor()
   private setUI() {
     const iniciales=this.name.slice(0,2)

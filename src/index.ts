@@ -41,7 +41,8 @@ if (projectForm) {
         userRole: formData.get("userRole") as userRole,
         finishDate: new Date(formData.get("finishDate") as string),
         id: "",
-        cost: 20000,
+        cost: 0,
+        progress:0
       };
       try {
         const project = projectsManager.newProject(projectData);
