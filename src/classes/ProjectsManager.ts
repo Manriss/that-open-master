@@ -19,12 +19,50 @@ export class ProjectsManager {
       if(!projectPage || !detailPage)return
       projectPage.style.display="none"
       detailPage.style.display="flex"
+      this.setDetailsPage(project)
     })
     this.list.push(project);
     this.ui.append(project.ui);
 
     return project;
   }
+private setDetailsPage(project){
+  console.log(project)
+  const detailsPage=document.getElementById("project-details")
+  if(!detailsPage)return
+  const nameList=detailsPage.querySelectorAll("[data-project-info='name']")
+  const descriptionList=detailsPage.querySelectorAll("[data-project-info='description']")
+  const cost=detailsPage.querySelector("[data-project-info='cost']")
+  const status=detailsPage.querySelector("[data-project-info='status']")
+  const userRole=detailsPage.querySelector("[data-project-info='userRole']")
+  const finishDate=detailsPage.querySelector("[data-project-info='finishDate']")
+  const progress=detailsPage.querySelector("[data-project-info='progress']") as HTMLElement
+  if(nameList){
+    nameList.forEach((name)=>{name.textContent=project.name})
+    }
+   if(descriptionList){
+    descriptionList.forEach((description)=>{description.textContent=project.description})
+  } 
+  if(cost){
+    cost.textContent=project.cost
+  }
+  if(status){
+    status.textContent=project.status
+  }
+  if(userRole){
+    userRole.textContent=project.userRole
+  }
+  if(finishDate){
+    console.log(project.finishDate)
+    const tempDate=new Date(project.finishDate)
+    finishDate.textContent=tempDate.toDateString()
+  }
+  if(progress){
+    progress.style.width=project.progress+"%"
+    progress.textContent=project.progress + "%"
+    
+  }
+}
 
   getProject(id: string) {
     const project = this.list.find((project) => {
