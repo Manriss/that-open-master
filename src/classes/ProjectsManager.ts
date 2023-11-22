@@ -224,6 +224,7 @@ export class ProjectsManager {
         };
 
         try {
+          
          const projectListWithoutEditedProject= this.list.filter((project)=>{
           if(project.id!=projectData.id){
             return true
