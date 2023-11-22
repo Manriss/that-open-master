@@ -1,4 +1,3 @@
-
 import { IProject, Project, status, userRole } from "./Project";
 import { errorPopUp, toogleModal } from "../utils";
 
@@ -220,12 +219,21 @@ export class ProjectsManager {
           userRole: formData.get("userRole") as userRole,
           finishDate: new Date(formData.get("finishDate") as string),
           id: project.id,
-          cost: project.cost,
-          progress: project.progress,
+          cost: formData.get("cost") as unknown as number,
+          progress: formData.get("progress") as unknown as number,
         };
+
         try {
-          //const project = projectsManager.newProject(projectData);
-          console.log(projectData);
+         const projectListWithoutEditedProject= this.list.filter((project)=>{
+          if(project.id!=projectData.id){
+            return true
+          }})
+          this.list=projectListWithoutEditedProject
+          const htmlProjectToRemove=document.getElementById(projectData.id)
+          if(htmlProjectToRemove){
+            htmlProjectToRemove.remove()
+            this.setDetailsPage(this.newProject(projectData))
+          }
           editForm.reset();
           toogleModal("edit-project-modal", false);
         } catch (err) {

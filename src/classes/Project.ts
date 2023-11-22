@@ -45,8 +45,9 @@ export class Project implements IProject {
     const iniciales=this.name.slice(0,2)
     this.ui = document.createElement("div");
     this.ui.className = "project-card"
+    this.ui.id=this.id
     this.ui.innerHTML = `
-          <div class="card-header">
+          <div  class="card-header">
             <p style="background-color: ${this.color}; padding: 10px; border-radius: 8px; aspect-ratio: 1;text-transform: uppercase;">${iniciales}</p>
             <div>
               <h5>${this.name}</h5>
