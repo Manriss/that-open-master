@@ -224,17 +224,8 @@ export class ProjectsManager {
         };
 
         try {
-          
-         const projectListWithoutEditedProject= this.list.filter((project)=>{
-          if(project.id!=projectData.id){
-            return true
-          }})
-          this.list=projectListWithoutEditedProject
-          const htmlProjectToRemove=document.getElementById(projectData.id)
-          if(htmlProjectToRemove){
-            htmlProjectToRemove.remove()
-            this.setDetailsPage(this.newProject(projectData))
-          }
+          this.deleteProject(projectData.id)
+          this.setDetailsPage(this.newProject(projectData))
           editForm.reset();
           toogleModal("edit-project-modal", false);
         } catch (err) {
