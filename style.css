@@ -303,3 +303,9 @@ input:focus, textarea:focus, select:focus {
   background-color: var(--primary);
   cursor:pointer
 }
+#add-TODO:hover{
+  border-radius: 20px;
+  padding: 2px;
+  background-color: var(--primary);
+  cursor:pointer
+}

@@ -191,19 +191,23 @@
                   <span class="material-icons-round">search</span>
                   <input type="text" placeholder="Search To-Do's by name" style="width: 100%;">
                 </div>
-                <span class="material-icons-round">add</span>
+                <span id="add-TODO" class="material-icons-round">add</span>
               </div>
             </div>
-            <div style="display: flex; flex-direction: column; padding: 10px 30px; row-gap: 20px;">
+            <div id="TODO-list" style="display: flex; flex-direction: column; padding: 10px 30px; row-gap: 20px;">
               <div class="todo-item">
                 <div style="display: flex; justify-content: space-between; align-items: center;">
                   <div style="display: flex; column-gap: 15px; align-items: center;">
                     <span class="material-icons-round"
                       style="padding: 10px; background-color: #686868; border-radius: 10px;">construction</span>
-                    <p>Make anything here as you want, even something longer.</p>
+                    <p>TODO Name</p>
                   </div>
                   <p style="text-wrap: nowrap; margin-left: 10px;">Fri, 20 sep</p>
                 </div>
+                <hr style="margin-top: 5px;">
+                <p style="margin:5px;">TODO description</p>
+                <hr style="margin-top: 5px;">
+                <p style="margin:5px; text-align: right;">OPEN</p>
               </div>
             </div>
           </div>
@@ -211,6 +215,11 @@
         <div id="viewer-container" class="dashboard-card"></div>
       </div>
     </div>
+    <dialog id="TODO-dialog">
+<form id="TODO-form">
+
+</form>
+    </dialog>
 <!--     USERS PAGE -->
     <div class="page" id="users-page" style="display: none;">
       <dialog id="new-user-modal">

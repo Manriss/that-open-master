@@ -91,6 +91,12 @@ export class ProjectsManager {
     editBtn.addEventListener("click", () => {
       this.updateProject(project);
     });
+    const addToDoBtn=document.getElementById("add-TODO") as HTMLElement
+    if(addToDoBtn){
+      addToDoBtn.addEventListener("click",()=>{
+        console.log("click")
+      })
+    }
   }
 
   getProject(id: string) {
