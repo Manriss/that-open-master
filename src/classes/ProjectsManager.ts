@@ -1,24 +1,31 @@
-import { IProject, Project, status, userRole } from "./Project";
+import { IProject, Project, status, userRole, ItodoItem } from "./Project";
 import { errorPopUp, toogleModal } from "../utils";
+import { v4 as uuidv4 } from "uuid";
+
 
 export class ProjectsManager {
   list: Project[] = [];
   ui: HTMLElement;
+  currentProject:IProject;
+  listProjectNames:string[];
   constructor(container: HTMLElement) {
     this.ui = container;
   }
 
   newProject(data: IProject) {
-    const listProjectNames = this.list.map((project) => {
+
+    this.listProjectNames = this.list.map((project) => {
       return project.name;
     });
-    if (listProjectNames.includes(data.name)) {
+
+    if (this.listProjectNames.includes(data.name)) {
       throw new Error(
         `a project with that name (${data.name}) already exists!`
       );
-    }
+    } 
     const project = new Project(data);
     project.ui.addEventListener("click", () => {
+      this.currentProject=project
       const projectPage = document.getElementById("projects-page");
       const detailPage = document.getElementById("project-details");
       if (!projectPage || !detailPage) return;
@@ -28,10 +35,11 @@ export class ProjectsManager {
     });
     this.list.push(project);
     this.ui.append(project.ui);
-
     return project;
   }
-  private setDetailsPage(project) {
+
+  private setDetailsPage(project:IProject) {
+    this.currentProject=project
     const detailsPage = document.getElementById("project-details");
     if (!detailsPage) return;
     const nameList = detailsPage.querySelectorAll("[data-project-info='name']");
@@ -63,7 +71,7 @@ export class ProjectsManager {
       });
     }
     if (cost) {
-      cost.textContent = project.cost;
+      cost.textContent = project.cost.toString();
     }
     if (status) {
       status.textContent = project.status;
@@ -72,7 +80,6 @@ export class ProjectsManager {
       userRole.textContent = project.userRole;
     }
     if (finishDate) {
-      console.log(project.finishDate);
       const tempDate = new Date(project.finishDate);
       finishDate.textContent = tempDate.toDateString();
     }
@@ -85,18 +92,18 @@ export class ProjectsManager {
       const inicial = project.name.slice(0, 2);
       iniciales.textContent = inicial;
     }
-    const editBtn = document.getElementById(
-      "edit-project-btn"
-    ) as HTMLButtonElement;
-    editBtn.addEventListener("click", () => {
-      this.updateProject(project);
-    });
-    const addToDoBtn=document.getElementById("add-TODO") as HTMLElement
-    if(addToDoBtn){
-      addToDoBtn.addEventListener("click",()=>{
-        console.log("click")
-      })
+    const todoList = document.getElementById("TODO-list") as HTMLElement;
+    todoList.textContent=""
+    if(project.todoList.length>0){
+      console.log( "hay tasks en project")
+      for(let task of project.todoList){
+      this.renderTask(task)
+    }}else{
+      console.log(project, "no hay tasks en project")
+
     }
+
+
   }
 
   getProject(id: string) {
@@ -105,14 +112,20 @@ export class ProjectsManager {
     });
     return project;
   }
+
   deleteProject(id: string) {
     const project = this.getProject(id);
     if (!project) return;
+    const projectName=project.name
     project.ui.remove();
     const remaining = this.list.filter((project) => {
       return project.id != id;
     });
     this.list = remaining;
+    const remainingNames=this.listProjectNames.filter(name=>{
+      return name!=projectName
+    })
+    this.listProjectNames=remainingNames
   }
   getProjectByName(name: string) {
     const project = this.list.find((project) => {
@@ -150,6 +163,7 @@ export class ProjectsManager {
       const json = reader.result;
       if (!json) return;
       const projects: IProject[] = JSON.parse(json as string);
+      console.log(projects)
       for (const project of projects) {
         try {
           this.newProject(project);
@@ -167,77 +181,40 @@ export class ProjectsManager {
     input.click();
   }
 
-  updateProject(project) {
-    console.log(project);
-    toogleModal("edit-project-modal", true);
+  updateProject(projectData) {
+    const project=this.currentProject
+    this.deleteProject(project.id)
+    const updatedProject=this.newProject(projectData)
+    this.setDetailsPage(updatedProject)
+  }
+  renderTask(taskData:ItodoItem){
+    console.log("rendering task")
+    const todoList = document.getElementById("TODO-list") as HTMLElement;
+    const newUiTask: HTMLElement = document.createElement("div");
+    newUiTask.className = "todo-item";
+    newUiTask.innerHTML = `
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+      <div style="display: flex; column-gap: 15px; align-items: center;">
+        <span class="material-icons-round" style="padding: 10px; background-color: #686868; border-radius: 10px;">construction</span>
+           <p>${taskData.name}</p>
+      </div>
+    <p style="text-wrap: nowrap; margin-left: 10px;">${taskData.finishDate.toLocaleString()}</p>
+    </div>
+    <hr style="margin-top: 5px;">
+    <p style="margin:5px;">${taskData.description}</p>
+    <hr style="margin-top: 5px;">
+    <p style="margin:5px; text-align: right;">${taskData.status}</p>`;
 
-    const editForm = document.getElementById("edit-project-form");
-    if (!editForm) return;
-    const name = document.querySelector(
-      "[data-edit-info='name']"
-    ) as HTMLInputElement;
-    const description = document.querySelector(
-      "[data-edit-info='description']"
-    ) as HTMLInputElement;
-    const status = document.querySelector(
-      "[data-edit-info='status']"
-    ) as HTMLInputElement;
-    const userRole = document.querySelector(
-      "[data-edit-info='userRole']"
-    ) as HTMLInputElement;
-    const cost = document.querySelector(
-      "[data-edit-info='cost']"
-    ) as HTMLInputElement;
-    const progress = document.querySelector(
-      "[data-edit-info='progress']"
-    ) as HTMLInputElement;
-    const finishDate = document.querySelector(
-      "[data-edit-info='finishDate']"
-    ) as HTMLInputElement;
-    //100% sguro que existen
-    name.value = project.name;
-    description.value = project.description;
-    status.value = project.status;
-    userRole.value = project.userRole;
-    //la fecha de project hay que ponerla en formato yyyy-mm-dd
-    finishDate.value = project.finishDate;
-    cost.value = project.cost;
-    progress.value = project.progress;
-
-    editForm.addEventListener("click", (e) => {
-      const boton = e.target as HTMLButtonElement;
-      if (boton.value == "cancel") {
-        if (editForm instanceof HTMLFormElement) {
-          editForm.reset();
-          toogleModal("edit-project-modal", false);
-        }
-      }
-    });
-
-    editForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      if (editForm instanceof HTMLFormElement) {
-        const formData = new FormData(editForm);
-        const projectData: IProject = {
-          name: formData.get("name") as string,
-          description: formData.get("description") as string,
-          status: formData.get("status") as status,
-          userRole: formData.get("userRole") as userRole,
-          finishDate: new Date(formData.get("finishDate") as string),
-          id: project.id,
-          cost: formData.get("cost") as unknown as number,
-          progress: formData.get("progress") as unknown as number,
-        };
-
-        try {
-          this.deleteProject(projectData.id)
-          this.setDetailsPage(this.newProject(projectData))
-          editForm.reset();
-          toogleModal("edit-project-modal", false);
-        } catch (err) {
-          errorPopUp(err);
-        }
-      }
-    });
+    todoList.appendChild(newUiTask);
+  }
+  
+  
+  newTask(taskData: ItodoItem, project: IProject) {
+    console.log("adding task")
+    taskData.id = uuidv4();
+    taskData.status = "active";
+    project.todoList.push(taskData);
+    
+    this.renderTask(taskData)
   }
 }

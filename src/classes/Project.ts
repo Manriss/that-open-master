@@ -4,6 +4,13 @@ import { randomColor } from '../utils';
 export type status = "pending" | "active" | "finished"
 export type userRole = "Architect" | "engineer" | "developer"
 
+export interface ItodoItem{
+  name:string;
+  description:string;
+  finishDate:Date;
+  status:status;
+  id:string
+}
 export interface IProject {
   name: string;
   description: string;
@@ -13,6 +20,8 @@ export interface IProject {
   id: string;
   cost: number;
   progress:number
+  todoList:ItodoItem[]
+  color:string
 }
 export class Project implements IProject {
   name: string;
@@ -21,8 +30,8 @@ export class Project implements IProject {
   userRole: "Architect" | "engineer" | "developer";
   finishDate: Date;
   id: string;
-
-
+  todoList: ItodoItem[];
+  color:string
   constructor(data: IProject) {
     /*   for(const key in data){
         this[key]=data[key]
@@ -34,13 +43,24 @@ export class Project implements IProject {
     this.finishDate = data.finishDate;
     this.cost=data.cost;
     this.progress=data.progress;
-    this.id = uuidv4()
+    this.todoList=data.todoList
+    if(data.id!=""){
+      this.id=data.id
+    }else{
+      this.id = uuidv4()
+    }
+    if(data.color!=""){
+      this.color=data.color
+    }else{
+      this.color=randomColor()
+    }
+    
     this.setUI()
   }
   ui: HTMLElement;
   cost: number
   progress: number 
-  color=randomColor()
+  
   private setUI() {
     const iniciales=this.name.slice(0,2)
     this.ui = document.createElement("div");
