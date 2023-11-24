@@ -281,16 +281,16 @@ input:focus, textarea:focus, select:focus {
 /*users*/
 
 .usuario{
-  display:flex;
- align-items: flex-start;
 
-  width: 300px;
+display:flex;
+ 
   padding: 10px 5px 10px 5px;
   margin:5px 10px 5px 10px;
-  border-radius: 5px;
+ width: max-content;
   
 
 }
+
 
 #error{
   display:flex;
