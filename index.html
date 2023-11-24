@@ -237,15 +237,17 @@
           <h2>New User</h2>
           <div>
             <label style="margin:10px">User name</label>
-            <input type="text" placeholder="name surname" style="margin:10px;padding: 5px;width:90%">
+            <input type="text" name="name" placeholder="name surname" style="margin:10px;padding: 5px;width:90%">
+            <label style="margin:10px">email</label>
+            <input type="text" name="email"  placeholder="email" style="margin:10px;padding: 5px;width:90%">
             <label style="margin:10px">Role</label>
-            <select style="margin:10px;padding: 5px;">
+            <select name="userRole" style="margin:10px;padding: 5px;">
               <option>Architect</option>
               <option>Engineer</option>
               <option>Owner</option>
             </select>
             <label style="margin:10px">Status</label>
-            <select style="margin:10px;padding: 5px;">
+            <select name="userStatus" style="margin:10px;padding: 5px;">
               <option>Active</option>
               <option>Unactive</option>
             </select>
@@ -263,33 +265,16 @@
             home
           </span>
         </button>
-        <button>
+        <button id="addUserBtn">
           <span class="material-symbols-outlined">
             add_circle
           </span>
           Add user
         </button>
       </header>
-      <div id="user-list">
-        <ul style="list-style-type: none;">
-          <li class="usuario">
-            <div style="display:flex;align-items:center;font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 12px;;">ML</div>
-            <div style ="font-size: 20px;background-color: #347fca;padding: 15px;border-radius: 18px;">Manolito Lopez</div>
-            <div style ="font-size: 20px;background-color: #347fca;padding: 15px;border-radius: 18px;">Architect</div>
-            <div style ="font-size: 20px;background-color: #347fca;padding: 15px;border-radius: 18px;">Active</div>
-          </li>
-          <li class="usuario">
-            <div style="display:flex;align-items:center;font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 12px;;">MR</div>
-            <div style ="font-size: 20px;background-color: #347fca;padding: 15px;border-radius: 18px;">Manuel Romero</div>
-            <div style ="font-size: 20px;background-color: #347fca;padding: 15px;border-radius: 18px;">Engineer</div>
-            <div style ="font-size: 20px;background-color: #347fca;padding: 15px;border-radius: 18px;">Active</div>
-          </li>
-          <li class="usuario">
-            <div style="display:flex;align-items:center;font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 12px;;">PS</div>
-            <div style ="font-size: 20px;background-color: #347fca;padding: 15px;border-radius: 18px;">Pedro Sanchez</div>
-            <div style ="font-size: 20px;background-color: #347fca;padding: 15px;border-radius: 18px;">Owner</div>
-            <div style ="font-size: 20px;background-color: #347fca;padding: 15px;border-radius: 18px;">Active</div>
-          </li>
+      <div >
+        <ul id="user-list" style="list-style-type: none;">
+
         </ul>
       </div>
     </div>

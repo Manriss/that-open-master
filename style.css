@@ -282,11 +282,11 @@ input:focus, textarea:focus, select:focus {
 
 .usuario{
   display:flex;
-  align-items: center;
-  justify-content: space-between;
+ align-items: flex-start;
+
+  width: 300px;
   padding: 10px 5px 10px 5px;
   margin:5px 10px 5px 10px;
-  background-color: var(--primary-200);
   border-radius: 5px;
   
 

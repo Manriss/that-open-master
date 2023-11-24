@@ -1,9 +1,11 @@
 import { IProject, ItodoItem, status, userRole } from "./classes/Project";
 import { ProjectsManager } from "./classes/ProjectsManager";
+import { UserManager } from "./classes/UserManager";
 import { errorPopUp, getToday, toogleModal } from "./utils";
-
+import {IUser,usersRoles,userStatus} from './classes/UserManager'
 const projectListUI = document.getElementById("projects-list") as HTMLElement;
 const projectsManager = new ProjectsManager(projectListUI);
+const userManager=new UserManager()
 // This document object is provided by the browser, and its main purpose is to help us interact with the DOM.
 const newProjectBtn = document.getElementById("new-project-btn");
 if (newProjectBtn) {
@@ -206,3 +208,36 @@ editForm.addEventListener("submit", (e) => {
         });
       }
     } 
+
+    const newUserBtn=document.getElementById("addUserBtn") as HTMLElement
+    newUserBtn.addEventListener("click",()=>{
+      console.log("click")
+    toogleModal("new-user-modal",true)
+    })
+
+      const newUserForm = document.getElementById("new-user-form") as HTMLElement;
+      if (newUserForm) {
+        newUserForm.addEventListener("submit", (e) => {
+          e.preventDefault();
+          if (newUserForm instanceof HTMLFormElement) {
+            const formData = new FormData(newUserForm);
+            const userData: IUser = {
+              name: formData.get("name") as string,
+              userRole: formData.get("userRole") as usersRoles,
+              status: formData.get("userStatus") as userStatus,
+              email: formData.get("email") as string,
+              id: "",
+            };
+            try {
+             const newUser=userManager.newUser(userData)
+             const htmlUsersList=document.getElementById("user-list") as HTMLElement
+             htmlUsersList.appendChild(newUser.ui)
+             newUserForm.reset();
+              toogleModal("new-user-modal", false);
+            } catch (err) {
+              errorPopUp(err);
+            }
+          }
+        });
+      }
+    
