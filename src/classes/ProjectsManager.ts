@@ -1,6 +1,7 @@
-import { IProject, Project, status, userRole, ItodoItem } from "./Project";
-import { errorPopUp, toogleModal } from "../utils";
+import { IProject, Project, ItodoItem } from "./Project";
+import { errorPopUp } from "../utils";
 import { v4 as uuidv4 } from "uuid";
+import { TaskManager } from "./TaskManager";
 
 
 export class ProjectsManager {
@@ -8,8 +9,10 @@ export class ProjectsManager {
   ui: HTMLElement;
   currentProject:IProject;
   listProjectNames:string[];
+  taskManager:TaskManager
   constructor(container: HTMLElement) {
     this.ui = container;
+    this.taskManager=new TaskManager()
   }
 
   newProject(data: IProject) {
@@ -97,7 +100,7 @@ export class ProjectsManager {
     if(project.todoList.length>0){
       console.log( "hay tasks en project")
       for(let task of project.todoList){
-      this.renderTask(task)
+      this.taskManager.renderTask(task,project)
     }}else{
       console.log(project, "no hay tasks en project")
 
@@ -163,8 +166,10 @@ export class ProjectsManager {
       const json = reader.result;
       if (!json) return;
       const projects: IProject[] = JSON.parse(json as string);
-      console.log(projects)
+      console.log(this.list)
+      
       for (const project of projects) {
+        console.log(project.id)
         try {
           this.newProject(project);
         } catch (error) {
@@ -187,34 +192,16 @@ export class ProjectsManager {
     const updatedProject=this.newProject(projectData)
     this.setDetailsPage(updatedProject)
   }
-  renderTask(taskData:ItodoItem){
-    console.log("rendering task")
-    const todoList = document.getElementById("TODO-list") as HTMLElement;
-    const newUiTask: HTMLElement = document.createElement("div");
-    newUiTask.className = "todo-item";
-    newUiTask.innerHTML = `
-    <div style="display: flex; justify-content: space-between; align-items: center;">
-      <div style="display: flex; column-gap: 15px; align-items: center;">
-        <span class="material-icons-round" style="padding: 10px; background-color: #686868; border-radius: 10px;">construction</span>
-           <p>${taskData.name}</p>
-      </div>
-    <p style="text-wrap: nowrap; margin-left: 10px;">${taskData.finishDate.toLocaleString()}</p>
-    </div>
-    <hr style="margin-top: 5px;">
-    <p style="margin:5px;">${taskData.description}</p>
-    <hr style="margin-top: 5px;">
-    <p style="margin:5px; text-align: right;">${taskData.status}</p>`;
 
-    todoList.appendChild(newUiTask);
-  }
   
   
   newTask(taskData: ItodoItem, project: IProject) {
-    console.log("adding task")
+/*     console.log("adding task")
     taskData.id = uuidv4();
     taskData.status = "active";
-    project.todoList.push(taskData);
+    project.todoList.push(taskData); */
+    this.taskManager.newTask(taskData,this.currentProject)
     
-    this.renderTask(taskData)
+    this.taskManager.renderTask(taskData,this.currentProject)
   }
 }

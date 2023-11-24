@@ -76,9 +76,24 @@ const sideBarProjectsBtn = document.getElementById(
 sideBarProjectsBtn.addEventListener("click", () => {
   const projectPage = document.getElementById("projects-page");
   const detailPage = document.getElementById("project-details");
-  if (!projectPage || !detailPage) return;
+  const usersPage=document.getElementById("users-page")
+  if (!projectPage || !detailPage ||!usersPage) return;
   projectPage.style.display = "flex";
   detailPage.style.display = "none";
+  usersPage.style.display="none"
+});
+
+const sideBarUsersBtn = document.getElementById(
+  "usersBtn"
+) as HTMLElement;
+sideBarUsersBtn.addEventListener("click", () => {
+  const projectPage = document.getElementById("projects-page");
+  const detailPage = document.getElementById("project-details");
+  const usersPage=document.getElementById("users-page")
+  if (!projectPage || !detailPage||!usersPage) return;
+  projectPage.style.display = "none";
+  detailPage.style.display = "none";
+  usersPage.style.display="flex"
 });
 
 const editBtn = document.getElementById(
