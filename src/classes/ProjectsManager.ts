@@ -166,15 +166,29 @@ export class ProjectsManager {
       const json = reader.result;
       if (!json) return;
       const projects: IProject[] = JSON.parse(json as string);
-      console.log(this.list)
-      
+      const projectsID=this.list.map((project)=>{
+        return (project.id)
+      })
+      console.log(projectsID)
       for (const project of projects) {
-        console.log(project.id)
-        try {
-          this.newProject(project);
-        } catch (error) {
-          errorPopUp(error);
+        if(projectsID.includes(project.id)){
+          //remove old project before
+          console.log("project updated")
+          this.deleteProject(project.id)
+          try {
+            this.newProject(project);
+          } catch (error) {
+            errorPopUp(error);
+          }
+        }else{
+          try {
+            this.newProject(project);
+          } catch (error) {
+            errorPopUp(error);
+          }
         }
+        
+
       }
     });
 
