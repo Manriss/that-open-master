@@ -20,13 +20,13 @@ this.userList=[]
 }
 ui:HTMLElement
 newUser(userData){
-  
+  const iniciales=  userData.name.slice(0, 2); 
     
 const userUI=document.createElement("li") 
 userUI.className="usuario"
 userUI.id=new uuidv4()
 userUI.innerHTML=`
-<div style="display:flex;align-items:center;font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 12px;;">ML</div>
+<div style="display:flex;align-items:center;font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 12px;text-transform:uppercase;">${iniciales}</div>
 <div style ="font-size: 20px;;padding: 15px;border-radius: 18px;">${userData.name}</div>
 <div style ="font-size: 20px;;padding: 15px;border-radius: 18px;">${userData.email}</div>
 <div style ="font-size: 20px;padding: 15px;border-radius: 18px;">${userData.userRole}</div>
