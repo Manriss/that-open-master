@@ -280,17 +280,12 @@ input:focus, textarea:focus, select:focus {
 
 /*users*/
 
-.usuario{
-
-display:flex;
- 
-  padding: 10px 5px 10px 5px;
-  margin:5px 10px 5px 10px;
- width: max-content;
-  
-
+#user-list{
+  width: 90%;
 }
-
+.usuario{
+  height: 20px;
+}
 
 #error{
   display:flex;

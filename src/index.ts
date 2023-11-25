@@ -2,7 +2,7 @@ import { IProject, ItodoItem, status, userRole } from "./classes/Project";
 import { ProjectsManager } from "./classes/ProjectsManager";
 import { UserManager } from "./classes/UserManager";
 import { errorPopUp, getToday, toogleModal } from "./utils";
-import {IUser,usersRoles,userStatus} from './classes/UserManager'
+import { IUser,usersRoles,userStatus } from "./classes/User";
 const projectListUI = document.getElementById("projects-list") as HTMLElement;
 const projectsManager = new ProjectsManager(projectListUI);
 const userManager=new UserManager()
