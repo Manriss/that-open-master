@@ -282,9 +282,10 @@ input:focus, textarea:focus, select:focus {
 
 #user-list{
   width: 90%;
+  margin-left: 5px;
 }
 .usuario{
-  height: 20px;
+  height: 25px;
 }
 
 #error{

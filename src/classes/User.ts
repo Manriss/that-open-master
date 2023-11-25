@@ -30,7 +30,7 @@ export class User implements IUser{
         userUI.className = "usuario";
         userUI.id = new uuidv4();
         userUI.innerHTML = `
-    <td style="display:flex;align-items:center;font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 1px;text-transform:uppercase;">${iniciales}</td>
+    <td style="display:flex;align-items:center;font-size: 20px; background-color: #ca8134; aspect-ratio: 1; border-radius: 100%; padding: 1px;text-transform:uppercase;width:35px;height:35px;justify-content:center">${iniciales}</td>
     <td style ="font-size: 20px;padding-left: 20px;">${userData.name}</td>
     <td style ="font-size: 20px;padding-left: 20px;">${userData.email}</td>
     <td style ="font-size: 20px;padding-left: 20px;">${userData.userRole}</td>
