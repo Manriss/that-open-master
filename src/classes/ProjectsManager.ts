@@ -13,6 +13,21 @@ export class ProjectsManager {
   constructor(container: HTMLElement) {
     this.ui = container;
     this.taskManager=new TaskManager()
+    //default project creation THREE.JS proupose
+    const project=this.newProject({
+      name:"default project",
+      description:"default description",
+      id:"qwqwqw",
+      status:"active",
+      userRole:"Architect",
+      finishDate:new Date(),
+      cost:123,
+      progress:25,
+      color:"",
+      todoList:[]
+
+    })
+    project.ui.click()
   }
 
   newProject(data: IProject) {
