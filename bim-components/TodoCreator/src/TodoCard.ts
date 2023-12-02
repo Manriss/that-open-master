@@ -36,7 +36,6 @@ export class TodoCard extends OBC.SimpleUIComponent {
     
     <div style="display:flex;justify-content: space-between;">
         <div data-tooeen-slot="cardActions"></div>
-        <p id="status" >Active</p>
     
     </div>
     </div>`

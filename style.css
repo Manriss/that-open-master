@@ -271,7 +271,7 @@ input:focus, textarea:focus, select:focus {
 }
 
 .todo-item:hover{
-  background-color: var(--primary);
+  background-color: var(--primary-200);
   cursor: pointer;
 }
 

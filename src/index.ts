@@ -435,6 +435,7 @@ ifcLoader.onIfcLoaded.add(async (model) => {
   onModelLoaded(model)
 });
 const todoCreator=new TodoCreator(viewer)
+
 importFragmentBtn.tooltip="import fragment"
 
 const toolbar = new OBC.Toolbar(viewer);
