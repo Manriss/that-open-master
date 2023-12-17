@@ -8,6 +8,7 @@ import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as OBC from "openbim-components";
 import { FragmentsGroup } from "bim-fragment";
 import { TodoCreator } from "../bim-components/TodoCreator";
+import { TaskManager } from "./classes/TaskManager";
 const projectListUI = document.getElementById("projects-list") as HTMLElement;
 const projectsManager = new ProjectsManager(projectListUI);
 const userManager = new UserManager();
@@ -209,7 +210,24 @@ if (addToDoBtn) {
     });
   }
 }
+const searchTaskBox=document.getElementById("search-task")
+if (searchTaskBox instanceof HTMLInputElement){
+searchTaskBox.addEventListener("input",(e)=>{
+search(e.target.value)
+})
 
+}
+function search(text: string) {
+  const todoList = document.getElementById("TODO-list") as HTMLElement;
+  todoList.innerHTML=""
+  for (const todo of projectsManager.currentProject.todoList) {
+    if (todo.name.startsWith(text)) {
+      projectsManager.taskManager.renderTask(todo,projectsManager.currentProject)
+    } else {
+     
+    }
+  }
+}
 const newUserBtn = document.getElementById("addUserBtn") as HTMLElement;
 newUserBtn.addEventListener("click", () => {
   console.log("click");
