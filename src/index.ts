@@ -351,18 +351,20 @@ async function createModelTree() {
   const fragmentTree = new OBC.FragmentTree(viewer);
   await fragmentTree.init();
   await fragmentTree.update(["model", "entities"]);
+  
   fragmentTree.onHovered.add((fragmentMap) => {
     highlighter.highlightByID("hover", fragmentMap);
   });
   fragmentTree.onSelected.add((fragmentMap) => {
     highlighter.highlightByID("select", fragmentMap);
   });
+  console.log(fragmentTree.get())
   const tree = fragmentTree.get().uiElement.get("tree");
   return tree;
 }
 function exportJsonProperties(model:FragmentsGroup){
   const json = JSON.stringify(model.properties, null, 2);
-  console.log(json);
+  
   const blob = new Blob([json], { type: "application/json" });
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
