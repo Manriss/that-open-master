@@ -27,7 +27,7 @@ export class ProjectsManager {
       todoList:[]
 
     })
-    project.ui.click()
+   // project.ui.click()
   }
 
   newProject(data: IProject) {
