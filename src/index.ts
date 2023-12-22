@@ -3,12 +3,12 @@ import { ProjectsManager } from "./classes/ProjectsManager";
 import { UserManager } from "./classes/UserManager";
 import { errorPopUp, getToday, toogleModal } from "./utils";
 import { IUser, usersRoles, userStatus } from "./classes/User";
-import * as THREE from "three";
-import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import * as OBC from "openbim-components";
 import { FragmentsGroup } from "bim-fragment";
 import { TodoCreator } from "../bim-components/TodoCreator";
-import { TaskManager } from "./classes/TaskManager";
+
+import { SimpleQTO } from "../bim-components/SimpleQTO";
+
 const projectListUI = document.getElementById("projects-list") as HTMLElement;
 const projectsManager = new ProjectsManager(projectListUI);
 const userManager = new UserManager();
@@ -337,13 +337,14 @@ fragmentManager.onFragmentsLoaded.add((model)=>{
 const ifcLoader = new OBC.FragmentIfcLoader(viewer);
 
 ifcLoader.settings.wasm = {
-  path: "https://unpkg.com/web-ifc@0.0.43/",
+  path: "https://unpkg.com/web-ifc@0.0.44/",
   absolute: true,
 };
 
 const highlighter = new OBC.FragmentHighlighter(viewer);
 highlighter.setup();
-
+const simpleQto=new SimpleQTO(viewer)
+await simpleQto.setup()
 const classifier = new OBC.FragmentClassifier(viewer);
 const classificationWindow = new OBC.FloatingWindow(viewer);
 viewer.ui.add(classificationWindow);
@@ -362,9 +363,12 @@ classificationBtn.onClick.add(() => {
 });
 
 const propertiesProcessor = new OBC.IfcPropertiesProcessor(viewer);
+
 highlighter.events.select.onClear.add((x) => {
   propertiesProcessor.cleanPropertiesList();
 });
+
+
 async function createModelTree() {
   const fragmentTree = new OBC.FragmentTree(viewer);
   await fragmentTree.init();
@@ -464,6 +468,8 @@ toolbar.addChild(
   classificationBtn,
   propertiesProcessor.uiElement.get("main"),
   importFragmentBtn,
-  todoCreator.uiElement.get("activationButton")
+  todoCreator.uiElement.get("activationButton"),
+  simpleQto.uiElement.get("activationBtn")
+  
 );
 viewer.ui.addToolbar(toolbar);
