@@ -30,29 +30,42 @@ export class SimpleQTO extends OBC.Component<QtoResult> implements OBC.UI, OBC.D
             //this.sumQuantities(fragmentMap)
             this.sumQuantitiesV2(fragmentMap)
         })
+
         fragmentHighlither.events.select.onClear.add(() => {
             this.resetQto()
+            console.log("clear ", Object.keys(fragmentHighlither.selection["select"]).length)
+            if (Object.keys(fragmentHighlither.selection["select"]).length == 0) {
+                console.log("no selection")
+            }
         })
     }
     async resetQto() {
         this._qtoResult = {}
+        this.resetQtoUI()
+
     }
 
 
+
     private setUI() {
+        const tree = new OBC.SimpleUIComponent(this._components, undefined, "tree")
         const activationBtn = new OBC.Button(this._components)
         activationBtn.materialIcon = "functions"
 
         const qtoList = new OBC.FloatingWindow(this._components)
         qtoList.title = "Quantification"
-
+        qtoList.addChild(tree)
+        this._components.ui.add(qtoList)
         qtoList.visible = false
+
         activationBtn.onClick.add(() => {
             activationBtn.active = !activationBtn.active
-            qtoList.visible = activationBtn.active
+            qtoList.visible = !qtoList.visible
         })
         this.uiElement.set({ activationBtn, qtoList })
     }
+
+
     //setID: id del propertySet
     //relatedId[]: ids de los objetos que tienen ese property set
     async sumQuantities(fragmentIDMap: OBC.FragmentIdMap) {
@@ -126,20 +139,36 @@ export class SimpleQTO extends OBC.Component<QtoResult> implements OBC.UI, OBC.D
                             if (!(qtoName in this._qtoResult[setName])) {
                                 this._qtoResult[setName][qtoName] = 0
                                 this._qtoResult[setName][qtoName] += value
-
                             }
                         })
-
-
                 }
-
-
-
             }
-
             console.log(this._qtoResult)
+            this.updateUI()
         }
 
+    }
+
+    async updateUI() {
+        this.resetQtoUI()
+        const qtoList = this.uiElement.get("qtoList")
+        const treeLevel1Items = Object.keys(this._qtoResult)
+        for (const qtoEntity of treeLevel1Items) {
+            const tree = new OBC.TreeView(this._components, qtoEntity)
+            tree.name = qtoEntity
+            const qtoItems = this._qtoResult[treeLevel1Items[0]]
+            for (const qtoItem in qtoItems) {
+                const value = qtoItems[qtoItem]
+                const qtoRecord = new OBC.SimpleUIComponent(this._components)
+                qtoRecord.get().innerHTML = `${qtoItem}: ${value.toFixed(3)}`
+                tree.addChild(qtoRecord)
+            }
+            qtoList.addChild(tree)
+        }
+    }
+    async resetQtoUI() {
+        const qtoList = this.uiElement.get("qtoList")
+        qtoList.get().children[1].innerHTML = ""
     }
 
 
